@@ -141,7 +141,7 @@ RUN set -x && \
     cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf && \
     cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
 
-RUN apt-get install -y wget unzip autoconf
+RUN apt-get install -y wget pkg-config  unzip autoconf
 # Enable memcache
 RUN set -x && \
     mkdir -p /usr/local/src/php-memcache && \

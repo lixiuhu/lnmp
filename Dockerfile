@@ -39,7 +39,7 @@ RUN apt-get install -y \
 
 
 #install pcre zlib ssl
-#RUN mkdir -p /home/tools && cd $_ && \
+RUN mkdir -p /home/tools && cd $_ && \
 	curl -O ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz && \
 	tar -zxf pcre-8.41.tar.gz && cd  pcre-8.41 && \
 	./configure && make && make install

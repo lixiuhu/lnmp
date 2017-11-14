@@ -50,12 +50,11 @@ RUN cd /home/tools && \
 	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
 	./configure && make && make install
 RUN cd /home/tools && \
-	curl -Lk  http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
+	curl -Lk http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
 	cd openssl-1.0.2k  && ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl  && make && make install
 RUN cd /home/tools && \
-	curl -O https://sourceforge.net/projects/re2c/files/0.16/re2c-0.16.tar.gz && \
-	tar -zxf re2c-0.16.tar.gz && cd re2c-0.16 && \
-	./configure && make && make install
+	curl -Lk https://sourceforge.net/projects/re2c/files/0.16/re2c-0.16.tar.gz | gunzip | tar x  && \
+	cd re2c-0.16 && ./configure && make && make install
 
 
 #download packages

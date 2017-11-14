@@ -83,6 +83,7 @@ RUN set -x && \
 	make && make install
 
 #install php
+RUN apt-get install --reinstall libgnutls-openssl27 libcurl4-gnutls-dev
   RUN set -x && \
       cd /home/nginx-php/php-$PHP_VERSION && \
       ./configure --prefix=/usr/local/php \

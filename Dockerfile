@@ -40,16 +40,16 @@ RUN apt-get install -y \
 
 #install pcre zlib ssl
 #RUN mkdir -p /home/tools && cd $_ && \
-#	curl -O ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz && \
-#	tar -zxf pcre-8.41.tar.gz && cd  pcre-8.41 && \
-#	./configure && make && make install
-#RUN cd /home/tools && \
-#	curl -O http://zlib.net/zlib-1.2.11.tar.gz && \
-#	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
-#	./configure && make && make install
-#RUN cd /home/tools && \
-#	curl -Lk  http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
-#	cd openssl-1.0.2k  && ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl  && make && make install
+	curl -O ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz && \
+	tar -zxf pcre-8.41.tar.gz && cd  pcre-8.41 && \
+	./configure && make && make install
+RUN cd /home/tools && \
+	curl -O http://zlib.net/zlib-1.2.11.tar.gz && \
+	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
+	./configure && make && make install
+RUN cd /home/tools && \
+	curl -Lk  http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
+	cd openssl-1.0.2k  && ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl  && make && make install
 
 #download packages
 RUN mkdir -p /home/nginx-php && cd $_ && \
@@ -64,8 +64,9 @@ RUN set -x && \
 	--error-log-path=/var/log/nginx_error.log \
 	--http-log-path=/var/log/nginx_access.log \
 	--pid-path=/var/run/nginx.pid \
-	--with-pcre \
-	--with-http_ssl_module \
+	--with-pcre=/home/tools/pcre-8.41 \
+	--with-http_ssl_module=/home/tools/openssl-1.0.2k \
+	--with-zlib=/home/tools/zlib-1.2.11 \
 	--without-mail_pop3_module \
 	--without-mail_imap_module \
 	--with-http_gzip_static_module && \

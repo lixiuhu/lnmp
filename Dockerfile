@@ -43,7 +43,7 @@ RUN cd /home/tools && \
 	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
 	./configure && make && make install
 RUN cd /home/tools && \
-	http://www.openssl.org/source/openssl-1.0.2k.tar.gz && \
+	curl -O	http://www.openssl.org/source/openssl-1.0.2k.tar.gz && \
 	tar -zxf openssl-1.0.2k.tar.gz && cd openssl-1.0.2k && \
 	./configure && make && make install
 

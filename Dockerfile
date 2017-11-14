@@ -32,10 +32,7 @@ RUN apt-get install -y \
     libldap2-dev \
 	libxslt-dev \
 	pcre \
-	pcre-devel \
-	openssl \
-	openssl-devel \
-	mysql
+	openssl 
 
 #install pcre zlib ssl
 RUN mkdir -p /home/tools && cd $_ && \

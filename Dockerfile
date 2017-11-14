@@ -17,4 +17,8 @@ RUN cd /home/tools && \
 	tar -zxf openssl-1.0.2k.tar.gz && cd openssl-1.0.2k && \
 	./configure && make && make install
 
+RUN mkdir -p /home/nginx-php && cd $_ && \
+	curl -Lk http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | gunzip | tar x -C /home/nginx-php && \
+	curl -Lk http://php.net/distributions/php-$PHP_VERSION.tar.gz | gunzip | tar x -C /home/nginx-php
 
+#

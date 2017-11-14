@@ -39,13 +39,13 @@ RUN mkdir -p /home/tools && cd $_ && \
 	tar -zxf pcre-8.41.tar.gz && cd  pcre-8.41 && \
 	./configure && make && make install
 RUN cd /home/tools && \
-	curl -O  http://zlib.net/zlib-1.2.11.tar.gz && \
+	curl -O http://zlib.net/zlib-1.2.11.tar.gz && \
 	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
 	./configure && make && make install
-RUN cd /home/tools && \
-	curl -O	http://www.openssl.org/source/openssl-1.0.2k.tar.gz && \
-	tar -zxf openssl-1.0.2k.tar.gz && cd openssl-1.0.2k && \
-	./configure && make && make install
+RUN cd /home/tools
+RUN curl -O http://www.openssl.org/source/openssl-1.0.2k.tar.gz
+RUN tar -zxf openssl-1.0.2k.tar.gz && cd openssl-1.0.2k
+RUN ./configure && make && make install
 
 RUN mkdir -p /home/nginx-php && cd $_ && \
 	curl -Lk http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | gunzip | tar x -C /home/nginx-php && \

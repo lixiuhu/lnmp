@@ -31,7 +31,6 @@ RUN apt-get install -y \
     libfreetype6-dev \
     libldap2-dev \
 	libxslt-dev \
-	pcre \
 	openssl 
 
 #install pcre zlib ssl

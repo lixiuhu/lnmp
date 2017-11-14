@@ -1,0 +1,11 @@
+FROM phusion/baseimage
+
+
+#install latest nginx stable
+#authenticate the nginx repository signature
+RUN mkdir tools && cd tools && curl -O http://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
+RUN deb http://nginx.org/packages/ubunu/ xenial nginx && deb-src http://nginx.org/packages/ubuntu/ xenial nginx
+RUN apt-get update && apt-get install nginx
+
+
+

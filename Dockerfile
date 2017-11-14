@@ -3,6 +3,17 @@ FROM phusion/baseimage
 ENV NGINX_VERSION 1.12.2
 ENV PHP_VERSION 7.1.11
 
+# Ensure UTF-8
+RUN locale-gen en_US.UTF-8
+ENV LANG       en_US.UTF-8
+ENV LC_ALL     en_US.UTF-8
+
+ENV HOME /root
+
+RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
+
+CMD ["/sbin/my_init"]
+
 #install gcc g++ environment
 RUN apt-get update
 RUN apt-get install build-essential libtool -y

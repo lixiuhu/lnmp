@@ -64,7 +64,7 @@ RUN set -x && \
 	--error-log-path=/var/log/nginx_error.log \
 	--http-log-path=/var/log/nginx_access.log \
 	--pid-path=/var/run/nginx.pid \
-	--with-pcre=/home/tools/pcre-8.41 \
+	--with-pcre=//root/pcre-8.41 \
 	--with-openssl=/home/tools/openssl-1.0.2k \
 	--with-http_ssl_module \
 	--with-zlib=/home/tools/zlib-1.2.11 \

@@ -45,13 +45,16 @@ RUN mkdir -p /home/tools && cd $_ && \
 	curl -O ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz && \
 	tar -zxf pcre-8.41.tar.gz && cd  pcre-8.41 && \
 	./configure && make && make install
+#install zlib
 RUN cd /home/tools && \
 	curl -O http://zlib.net/zlib-1.2.11.tar.gz && \
 	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
 	./configure && make && make install
+#install  ssl
 RUN cd /home/tools && \
 	curl -Lk http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
 	cd openssl-1.0.2k  && ./config shared --prefix=/usr/local/openssl --openssldir=/usr/lib/openssl  && make && make install
+#install re2c
 RUN cd /home/tools && \
 	curl -Lk https://sourceforge.net/projects/re2c/files/0.16/re2c-0.16.tar.gz | gunzip | tar x  && \
 	cd re2c-0.16 && ./configure && make && make install

@@ -20,16 +20,16 @@ RUN apt-get install build-essential libtool -y
 
 #install additional libraries
 RUN apt-get install -y \
-    libxml2-dev \
+	libxml2-dev \
 	libcurl4-openssl-dev \
 	libjpeg-dev \
-    libpng-dev \
-    libxpm-dev \
-    libmysqlclient-dev \
+	libpng-dev \
+	libxpm-dev \
+	libmysqlclient-dev \
 	libpq-dev \
 	libicu-dev \
-    libfreetype6-dev \
-    libldap2-dev \
+	libfreetype6-dev \
+	libldap2-dev \
 	libxslt-dev \
 	openssl 
 
@@ -42,10 +42,9 @@ RUN cd /home/tools && \
 	curl -O http://zlib.net/zlib-1.2.11.tar.gz && \
 	tar -zxf zlib-1.2.11.tar.gz && cd zlib-1.2.11 && \
 	./configure && make && make install
-RUN cd /home/tools
-RUN curl -O http://www.openssl.org/source/openssl-1.0.2k.tar.gz
-RUN tar -zxf openssl-1.0.2k.tar.gz && cd openssl-1.0.2k
-RUN ./configure && make && make install
+RUN cd /home/tools && \
+	curl -Lk  http://www.openssl.org/source/openssl-1.0.2k.tar.gz  | gunzip | tar x && \
+	cd openssl-1.0.2k  && ./configure && make && make install
 
 RUN mkdir -p /home/nginx-php && cd $_ && \
 	curl -Lk http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | gunzip | tar x -C /home/nginx-php && \

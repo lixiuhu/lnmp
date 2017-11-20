@@ -30,9 +30,8 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes \
     php7.1-xml \
     php7.1-bcmath
 
-# Install php-fpm extend
-# Enable memcache
-
+###### Install php-fpm extension######
+### Enable memcache
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y pkg-config zlib1g-dev re2c libmemcached-dev
 RUN set -x && \
     cd /usr/share/ && \
@@ -47,7 +46,7 @@ RUN set -x && \
     echo "extension=memcached.so" >> /etc/php/7.1/mods-available/memcached.ini && \
     ln -sf /etc/php/7.1/mods-available/memcached.ini /etc/php/7.1/fpm/conf.d/memcached.ini
 
-# Enable redis
+### Enable redis
 RUN set -x && \
     cd /usr/share/ && \
     wget https://github.com/phpredis/phpredis/archive/3.1.4.zip -O phpredis.zip && \
@@ -60,8 +59,7 @@ RUN set -x && \
     touch /etc/php/7.1/mods-available/redis.ini && \
     echo "extension=redis.so" >> /etc/php/7.1/mods-available/redis.ini && \
     ln -sf /etc/php/7.1/mods-available/redis.ini /etc/php/7.1/fpm/conf.d/redis.ini
-
-# Changing php.ini
+###### change php.ini ######
 RUN set -x && \
     sed -i 's/memory_limit = .*/memory_limit = 1024M/' /etc/php/7.1/fpm/php.ini && \
     sed -i 's/post_max_size = .*/post_max_size = 32M/' /etc/php/7.1/fpm/php.ini && \
@@ -71,7 +69,7 @@ RUN set -x && \
     echo zend_extension=opcache.so >> /etc/php/7.1/fpm/php.ini && \
     sed -i 's/^;cgi.fix_pathinfo =.*/cgi.fix_pathinfo = 0;/' /etc/php/7.1/fpm/php.ini
 
-# Chaning timezone
+###### Chaning timezone ######
 RUN set -x && \
     unlink /etc/localtime && \
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -79,16 +77,11 @@ RUN set -x && \
 #Change Mod from webdir
 RUN set -x && \
     chown -R www-data:www-data /var/www/html
-    #Install supervisor
-
 # Insert supervisord conf file
 ADD supervisord.conf /etc/
-
 #Create web folder,mysql folder
-VOLUME ["/var/www/html", "/usr/local/nginx/conf/ssl", "/usr/local/nginx/conf/vhost", "/usr/local/php/etc/php.d", "/var/www/phpext"]
-
+VOLUME ["/var/www/html", "/usr/local/nginx/conf/ssl", "/etc/nignx/site-enabled", "/etc/php/7.1/php.d", "/var/www/phpext"]
 ADD index.php /var/www/html
-
 ADD extfile/ /var/www/phpext/
 
 #Update nginx config
@@ -98,9 +91,7 @@ RUN rm /etc/nginx/sites-enabled/default
 #Start
 ADD startup.sh /var/www/startup.sh
 RUN chmod +x /var/www/startup.sh
-
 ENV PATH /usr/local/php/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
 RUN set -x && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
@@ -110,13 +101,8 @@ RUN sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.ba
 
 #Set port
 EXPOSE 80 443
-
 #Start it
 ENTRYPOINT ["/var/www/startup.sh"]
-
-#Start web server
-#CMD ["/bin/bash", "/startup.sh"]
-
 # Setting working directory
 WORKDIR /var/www/html
 

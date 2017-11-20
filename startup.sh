@@ -16,6 +16,4 @@ fi
 
 set -e
 chown -R www-data.www-data $DATA_DIR
-#/docker-entrypoint.sh
-
 /usr/bin/supervisord -n -c /etc/supervisord.conf

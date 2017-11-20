@@ -78,6 +78,7 @@ RUN set -x && \
 RUN set -x && \
     chown -R www-data:www-data /var/www/html
 # Insert supervisord conf file
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y supervisor
 ADD supervisord.conf /etc/
 #Create web folder,mysql folder
 VOLUME ["/var/www/html", "/usr/local/nginx/conf/ssl", "/etc/nignx/site-enabled", "/etc/php/7.1/php.d", "/var/www/phpext"]
@@ -105,4 +106,3 @@ EXPOSE 80 443
 ENTRYPOINT ["/var/www/startup.sh"]
 # Setting working directory
 WORKDIR /var/www/html
-

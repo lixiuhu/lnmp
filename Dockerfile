@@ -3,11 +3,8 @@ FROM phusion/baseimage
 RUN locale-gen en_US.UTF-8
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
-
 ENV HOME /root
-
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
-
 CMD ["/sbin/my_init"]
 
 # Nginx-PHP Installation
@@ -16,6 +13,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl wget build-esse
 RUN add-apt-repository -y ppa:nginx/stable
 RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes \
     php7.1 \
     php7.1-mysql \
@@ -34,7 +32,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes \
     php7.1-phpdbg \
     php7.1-xml \
     php7.1-bcmath
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx
 
-#sleep 800000
-RUN sleep 8000000
+
+# Install php-fpm extend
+# Enable memcache

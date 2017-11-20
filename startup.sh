@@ -9,13 +9,13 @@ then
   then
     export NR_INSTALL_SILENT=true
     /usr/bin/newrelic-install install
-    sed -i "s/newrelic.appname = .*/newrelic.appname = \"$NEWRELICAPPNAME\"/" /usr/local/php/etc/php.d/newrelic.ini
-    sed -i "s/newrelic.license = .*/newrelic.license = \"$NEWRELICKEY\"/" /usr/local/php/etc/php.d/newrelic.ini
+    sed -i "s/newrelic.appname = .*/newrelic.appname = \"$NEWRELICAPPNAME\"/" /etc/php/7.1/mods-available/newrelic.ini
+    sed -i "s/newrelic.license = .*/newrelic.license = \"$NEWRELICKEY\"/" /etc/php/7.1/mods-available/newrelic.ini
   fi
 fi
 
 set -e
-chown -R www.www $DATA_DIR
+chown -R www-data.www-data $DATA_DIR
 #/docker-entrypoint.sh
 
 /usr/bin/supervisord -n -c /etc/supervisord.conf

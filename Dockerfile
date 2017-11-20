@@ -63,6 +63,7 @@ RUN set -x && \
 
 ### add php other extension
 ADD extfile/ /var/www/phpext/
+RUN chmod a+x /var/www/phpext/*
 
 ###### change php.ini ######
 RUN set -x && \

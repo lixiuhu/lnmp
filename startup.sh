@@ -1,6 +1,7 @@
 #!/bin/sh
 Nginx_Install_Dir=/usr/local/nginx
 DATA_DIR=/var/www/html
+PHP_EXT=/var/www/phpext
 
 # Checking if newrelic variable is provided
 if [ ! -z ${NEWRELICKEY+x} ]; 

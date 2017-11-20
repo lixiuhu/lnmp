@@ -68,7 +68,13 @@ RUN set -x && \
     sed -i 's/^; max_input_vars =.*/max_input_vars =10000/' /etc/php/7.1/fpm/php.ini && \
     echo zend_extension=opcache.so >> /etc/php/7.1/fpm/php.ini && \
     sed -i 's/^;cgi.fix_pathinfo =.*/cgi.fix_pathinfo = 0;/' /etc/php/7.1/fpm/php.ini
-
+###### install drush ######
+RUN set -x && \
+    curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer global require drush/drush:~8 
+RUN sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.bashrc && \
+    . $HOME/.bashrc
 ###### Chaning timezone ######
 RUN set -x && \
     unlink /etc/localtime && \
@@ -86,19 +92,12 @@ ADD index.php /var/www/html
 ADD extfile/ /var/www/phpext/
 
 #Update nginx config
-ADD nginx.conf /etc/nginx/sites-enabled/
+ADD nginx.conf /etc/nginx/
 RUN rm /etc/nginx/sites-enabled/default
 
 #Start
 ADD startup.sh /var/www/startup.sh
 RUN chmod +x /var/www/startup.sh
-ENV PATH /usr/local/php/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-RUN set -x && \
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    composer global require drush/drush:~8 
-RUN sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.bashrc && \
-    . $HOME/.bashrc
 
 #Set port
 EXPOSE 80 443

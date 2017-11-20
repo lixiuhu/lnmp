@@ -4,7 +4,6 @@ RUN locale-gen en_US.UTF-8
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 ENV HOME /root
-RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 CMD ["/sbin/my_init"]
 
 # Nginx-PHP Installation
@@ -79,8 +78,9 @@ RUN set -x && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     composer global require drush/drush:~8
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.bashrc && \
-    . $HOME/.bashrc
+    source $HOME/.bashrc
 
 ###### Chaning timezone ######
 RUN set -x && \

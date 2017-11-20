@@ -45,7 +45,7 @@ RUN set -x && \
     make install && \
     touch /etc/php/7.1/mods-available/memcached.ini && \
     echo "extension=memcached.so" >> /etc/php/7.1/mods-available/memcached.ini && \
-    ln -sf /etc/php/7.1/fpm/conf.d/memcached.ini /etc/php/7.1/mods-available/memcached.ini 
+    ln -sf /etc/php/7.1/mods-available/memcached.ini /etc/php/7.1/fpm/conf.d/memcached.ini
 
 # Enable redis
 RUN set -x && \
@@ -59,7 +59,7 @@ RUN set -x && \
     make install && \
     touch /etc/php/7.1/mods-available/redis.ini && \
     echo "extension=redis.so" >> /etc/php/7.1/mods-available/redis.ini && \
-    ln -sf /etc/php/7.1/fpm/conf.d/redis.ini /etc/php/7.1/mods-available/redis.ini
+    ln -sf /etc/php/7.1/mods-available/redis.ini /etc/php/7.1/fpm/conf.d/redis.ini
 
 # Changing php.ini
 RUN set -x && \
@@ -92,10 +92,8 @@ ADD index.php /var/www/html
 ADD extfile/ /var/www/phpext/
 
 #Update nginx config
-ADD nginx.conf /usr/local/nginx/conf/
-
-#ADD ./scripts/docker-entrypoint.sh /docker-entrypoint.sh
-#ADD ./scripts/docker-install.sh /docker-install.sh
+ADD nginx.conf /etc/nginx/sites-enabled/
+RUN rm /etc/nginx/sites-enabled/default
 
 #Start
 ADD startup.sh /var/www/startup.sh
@@ -106,9 +104,9 @@ ENV PATH /usr/local/php/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/s
 RUN set -x && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
-    composer global require drush/drush:~8 && \
-    sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.bashrc && \
-    source $HOME/.bashrc
+    composer global require drush/drush:~8 
+RUN sed -i '1i export PATH="$HOME/.composer/vendor/drush/drush:$PATH"' $HOME/.bashrc && \
+    . $HOME/.bashrc
 
 #Set port
 EXPOSE 80 443

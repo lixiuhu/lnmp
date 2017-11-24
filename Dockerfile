@@ -8,7 +8,7 @@ CMD ["/sbin/my_init"]
 
 # Nginx-PHP Installation
 RUN apt-get update
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim unzip curl wget build-essential python-software-properties
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim unzip curl wget  mysql-client-5.7 build-essential python-software-properties
 RUN add-apt-repository -y ppa:nginx/stable
 RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update

@@ -28,7 +28,8 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes \
     php7.1-dev \
     php7.1-xml \
     php7.1-bcmath \
-    php7.1-soap
+    php7.1-soap \
+    php7.1-pgsql
 
 ###### Install php-fpm extension######
 ### Enable memcache

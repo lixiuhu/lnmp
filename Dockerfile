@@ -12,7 +12,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim unzip curl wget  mys
 RUN add-apt-repository -y ppa:nginx/stable
 RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx git
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes \
     php7.1-mysql \
     php7.1-xml \
@@ -104,10 +104,8 @@ ADD supervisord.conf /etc/
 ADD startup.sh /var/www/startup.sh
 RUN chmod +x /var/www/startup.sh
 
-######clean os ######
 RUN apt-get remove -y --auto-remove unzip wget make gcc && \
 	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
 
 ###### startup prepare ######
 VOLUME ["/var/www/html", "/etc/nginx/ssl", "/etc/nignx/site-enabled", "/etc/php/7.1/php.d", "/var/www/phpext"]

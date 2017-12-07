@@ -104,9 +104,6 @@ ADD supervisord.conf /etc/
 ADD startup.sh /var/www/startup.sh
 RUN chmod +x /var/www/startup.sh
 
-RUN apt-get remove -y --auto-remove unzip wget make gcc && \
-	apt-get clean && \
-
 ###### startup prepare ######
 VOLUME ["/var/www/html", "/etc/nginx/ssl", "/etc/nignx/site-enabled", "/etc/php/7.1/php.d", "/var/www/phpext"]
 EXPOSE 80 443
